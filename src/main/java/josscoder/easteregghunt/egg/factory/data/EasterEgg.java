@@ -1,4 +1,4 @@
-package josscoder.easteregghunt.factory.data;
+package josscoder.easteregghunt.egg.factory.data;
 
 import cn.nukkit.level.Position;
 import lombok.Data;

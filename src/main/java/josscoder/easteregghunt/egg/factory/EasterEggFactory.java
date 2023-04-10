@@ -1,4 +1,4 @@
-package josscoder.easteregghunt.factory;
+package josscoder.easteregghunt.egg.factory;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -9,7 +9,9 @@ import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.TextFormat;
 import josscoder.easteregghunt.EasterEggHuntPlugin;
 import josscoder.easteregghunt.animation.DefaultEasterEggAnimation;
-import josscoder.easteregghunt.factory.data.EasterEgg;
+import josscoder.easteregghunt.egg.factory.data.EasterEgg;
+import josscoder.easteregghunt.session.SessionFactory;
+import josscoder.easteregghunt.session.data.UserSession;
 import josscoder.easteregghunt.utils.PositionUtils;
 import josscoder.jnpc.entity.line.PlaceholderLine;
 import josscoder.jnpc.entity.npc.NPC;
@@ -22,6 +24,8 @@ import java.util.function.Function;
 
 @Getter
 public class EasterEggFactory {
+
+    public static final int MAX_EGGS = 12;
 
     private final Config config;
     private final ConfigSection eggsSection;
@@ -73,12 +77,32 @@ public class EasterEggFactory {
                 .scale(2f)
                 .location(position.getLocation())
                 .controller(((clickedNPC, player) -> {
+                    UserSession session = SessionFactory.getInstance().getSession(player.getLoginChainData().getXUID());
+                    if (session == null) {
+                        return;
+                    }
 
+                    if (session.getEasterEggsFound().size() < MAX_EGGS) {
+                        player.sendMessage(TextFormat.RED + String.format("I need my %s eggs!", MAX_EGGS));
+                        return;
+                    }
+
+                    if (session.isRewardClaimed()) {
+                        player.sendMessage(TextFormat.RED + "You have already claimed the reward");
+                        return;
+                    }
+
+                    session.markRewardAsClaimed();
+
+                    EasterEggHuntPlugin.getInstance().getCommands().forEach(command -> {
+                        command = command.replace("%p", player.getName().replace(" ", "\\ "));
+                        Server.getInstance().dispatchCommand(Server.getInstance().getConsoleSender(), command);
+                    });
                 }))
                 .build()
         );
 
-        String message = "Help me find my &6&l12 eggs\n&rand bring them back for a nice reward!";
+        String message = String.format("Help me find my &6&l%s eggs\n&rand bring them back for a nice reward!", MAX_EGGS);
         Function<Player, String> header = player -> TextFormat.colorize(String.format("&b&lHello %s, I'm the Easter Bunny", player.getName()) + "\n" + message);
 
         npc.getTagSettings()
@@ -115,10 +139,30 @@ public class EasterEggFactory {
                 .customEntity(true)
                 .minecraftId("joss:easter_egg")
                 .location(easterEgg.getPosition().getLocation())
-                .controller((clickedNPC, player) -> Server.getInstance().getScheduler().scheduleRepeatingTask(
-                        new DefaultEasterEggAnimation(clickedNPC.getAttributeSettings().getLocation(), player, 30),
-                        1
-                ))
+                .controller((clickedNPC, player) -> {
+                    UserSession session = SessionFactory.getInstance().getSession(player.getLoginChainData().getXUID());
+                    if (session == null) {
+                        return;
+                    }
+
+                    if (session.hasEasterEggFound(easterEgg.getId())) {
+                        player.sendMessage(TextFormat.RED + "You have already found this egg!");
+                        return;
+                    }
+
+                    session.markEasterEggAsFound(easterEgg.getId());
+
+                    Server.getInstance().getScheduler().scheduleRepeatingTask(
+                            new DefaultEasterEggAnimation(clickedNPC.getAttributeSettings().getLocation(), player, 30),
+                            1
+                    );
+
+                    player.sendMessage(TextFormat.colorize(String.format("&aYou have found &e%s/%s &aeggs!", session.getCountFoundEasterEggs(), MAX_EGGS)));
+
+                    if (session.getCountFoundEasterEggs() >= MAX_EGGS) {
+                        player.sendMessage(TextFormat.AQUA + "You found all the eggs, give them to the Easter bunny!");
+                    }
+                })
                 .build()
         );
         npc.showToWorldPlayers();

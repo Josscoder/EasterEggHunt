@@ -1,5 +1,15 @@
+mongodb:
+  host: "localhost"
+  port: 27017
+  database: "minecraft"
+  username: "root"
+  password: "password"
+
 bunny: "0:100:0:world"
 
 eggs:
   "1": "0:100:0:world"
   "2": ""
+
+commands:
+  - "say %s is the best"

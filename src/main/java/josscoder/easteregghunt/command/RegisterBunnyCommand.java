@@ -5,7 +5,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.TextFormat;
-import josscoder.easteregghunt.factory.EasterEggFactory;
+import josscoder.easteregghunt.egg.factory.EasterEggFactory;
 
 public class RegisterBunnyCommand extends Command {
 

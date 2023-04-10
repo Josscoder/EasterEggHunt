@@ -5,6 +5,7 @@ import cn.nukkit.level.Location;
 import cn.nukkit.level.Sound;
 import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.level.particle.HugeExplodeSeedParticle;
+import cn.nukkit.utils.TextFormat;
 import josscoder.jnpc.entity.npc.NPC;
 import josscoder.jnpc.settings.AttributeSettings;
 
@@ -52,5 +53,7 @@ public class DefaultEasterEggAnimation extends Animation {
         player.getLevel().addParticle(new HugeExplodeSeedParticle(location.add(0, 1.1)), player);
 
         npc.remove();
+
+        player.sendTitle("", TextFormat.colorize("&6&lYou found an egg"));
     }
 }

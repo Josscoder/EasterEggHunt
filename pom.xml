@@ -12,6 +12,10 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <lombok.version>1.18.26</lombok.version>
+        <nukkit.version>1.0-SNAPSHOT</nukkit.version>
+        <jnpc.version>nukkit-db9870adaf-1</jnpc.version>
+        <mongo.version>3.12.12</mongo.version>
     </properties>
 
     <repositories>
@@ -33,19 +37,24 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>cn.nukkit</groupId>
             <artifactId>nukkit</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${nukkit.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.Josscoder</groupId>
             <artifactId>JNPC</artifactId>
-            <version>nukkit-db9870adaf-1</version>
+            <version>${jnpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongo.version}</version>
         </dependency>
     </dependencies>
 
