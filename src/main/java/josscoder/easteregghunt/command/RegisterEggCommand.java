@@ -26,6 +26,11 @@ public class RegisterEggCommand extends Command {
 
         Player player = (Player) sender;
 
+        if (easterEggFactory.getEasterEggs().size() >= EasterEggFactory.MAX_EGGS) {
+            player.sendMessage(TextFormat.RED + String.format("Only %s easter eggs can be registered!", EasterEggFactory.MAX_EGGS));
+            return false;
+        }
+
         EasterEgg easterEgg = easterEggFactory.registerAngGetEgg(player.getPosition());
         Position position = easterEgg.getPosition();
 

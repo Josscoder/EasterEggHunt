@@ -11,7 +11,6 @@ public class SessionFactory {
     @Getter
     private static SessionFactory instance;
 
-
     @Getter
     private final Map<String, UserSession> sessionStorage = new HashMap<>();
 
