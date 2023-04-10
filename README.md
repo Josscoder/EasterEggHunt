@@ -1,5 +1,6 @@
 # EasterEggHunt
-Easter egg hunt event
+
+Easter egg hunt event with MongoDB for Nukkit
 
 TexturePack: https://www.mediafire.com/file/a35v923zcg2b08n/EasterEggHuntPack.zip/file
 
