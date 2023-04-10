@@ -123,7 +123,7 @@ public class EasterEggFactory {
             registerEgg(easterEgg, false);
         });
 
-        EasterEggHuntPlugin.getInstance().getLogger().info(TextFormat.AQUA + String.format("%s egg(s) were loaded!", easterEggs.size()));
+        EasterEggHuntPlugin.getInstance().getLogger().info(TextFormat.AQUA + "all easter eggs were loaded!");
     }
 
     public void registerEgg(EasterEgg easterEgg, boolean serialize) {
