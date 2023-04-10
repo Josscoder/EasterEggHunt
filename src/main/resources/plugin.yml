@@ -1,0 +1,5 @@
+name: EasterEggHunt
+main: josscoder.easteregghunt.EasterEggHuntPlugin
+api: 1.0.0
+version: ${project.version}
+author: Josscoder
