@@ -157,9 +157,11 @@ public class EasterEggFactory {
                             1
                     );
 
-                    player.sendMessage(TextFormat.colorize(String.format("&aYou have found &e%s/%s &aeggs!", session.getCountFoundEasterEggs(), MAX_EGGS)));
+                    int eggsFound = session.getCountFoundEasterEggs() + 1;
 
-                    if (session.getCountFoundEasterEggs() >= MAX_EGGS) {
+                    player.sendMessage(TextFormat.colorize(String.format("&aYou have found &e%s/%s &aeggs!", eggsFound, MAX_EGGS)));
+
+                    if (eggsFound >= MAX_EGGS) {
                         player.sendMessage(TextFormat.AQUA + "You found all the eggs, give them to the Easter bunny!");
                     }
                 })
