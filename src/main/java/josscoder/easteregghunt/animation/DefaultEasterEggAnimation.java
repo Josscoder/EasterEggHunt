@@ -22,8 +22,7 @@ public class DefaultEasterEggAnimation extends Animation {
                 .customEntity(true)
                 .minecraftId("joss:easter_egg")
                 .location(initLocation)
-                .controller((npc, player) -> {
-                })
+                .controller((npc, player) -> {})
                 .build()
         );
         npc.showToWorldPlayers();
@@ -42,7 +41,7 @@ public class DefaultEasterEggAnimation extends Animation {
             player.getLevel().addParticle(new HeartParticle(location.subtract(0, 1)), player);
         }
 
-        player.getLevel().addSound(player, Sound.RANDOM_POP);
+        player.getLevel().addSound(player, Sound.BLOCK_TURTLE_EGG_CRACK);
     }
 
     @Override

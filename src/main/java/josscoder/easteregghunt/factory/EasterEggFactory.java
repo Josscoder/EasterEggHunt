@@ -115,10 +115,10 @@ public class EasterEggFactory {
                 .customEntity(true)
                 .minecraftId("joss:easter_egg")
                 .location(easterEgg.getPosition().getLocation())
-                .controller(((clickedNPC, player) -> Server.getInstance().getScheduler().scheduleRepeatingTask(
+                .controller((clickedNPC, player) -> Server.getInstance().getScheduler().scheduleRepeatingTask(
                         new DefaultEasterEggAnimation(clickedNPC.getAttributeSettings().getLocation(), player, 30),
                         1
-                )))
+                ))
                 .build()
         );
         npc.showToWorldPlayers();

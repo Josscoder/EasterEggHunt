@@ -11,7 +11,7 @@ public abstract class Animation extends Task {
     protected int ticks;
 
     protected Animation(Location initLocation, Player player, int ticks) {
-        this.initLocation = initLocation;
+        this.initLocation = initLocation.clone();
         this.player = player;
         this.ticks = ticks;
 
