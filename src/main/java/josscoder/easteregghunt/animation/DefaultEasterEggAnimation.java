@@ -26,7 +26,7 @@ public class DefaultEasterEggAnimation extends Animation {
                 .controller((npc, player) -> {})
                 .build()
         );
-        npc.showToWorldPlayers();
+        npc.show(player);
     }
 
     @Override

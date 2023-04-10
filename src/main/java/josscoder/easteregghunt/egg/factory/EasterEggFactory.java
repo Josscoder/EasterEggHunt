@@ -150,20 +150,20 @@ public class EasterEggFactory {
                         return;
                     }
 
-                    session.markEasterEggAsFound(easterEgg.getId());
+                    session.markEasterEggAsFound(easterEgg.getId()).whenComplete(((unused, throwable) -> {
+                        Server.getInstance().getScheduler().scheduleRepeatingTask(
+                                new DefaultEasterEggAnimation(clickedNPC.getAttributeSettings().getLocation(), player, 30),
+                                1
+                        );
 
-                    Server.getInstance().getScheduler().scheduleRepeatingTask(
-                            new DefaultEasterEggAnimation(clickedNPC.getAttributeSettings().getLocation(), player, 30),
-                            1
-                    );
+                        int eggsFound = session.getCountFoundEasterEggs();
 
-                    int eggsFound = session.getCountFoundEasterEggs() + 1;
+                        player.sendMessage(TextFormat.colorize(String.format("&aYou have found &e%s/%s &aeggs!", eggsFound, MAX_EGGS)));
 
-                    player.sendMessage(TextFormat.colorize(String.format("&aYou have found &e%s/%s &aeggs!", eggsFound, MAX_EGGS)));
-
-                    if (eggsFound >= MAX_EGGS) {
-                        player.sendMessage(TextFormat.AQUA + "You found all the eggs, give them to the Easter bunny!");
-                    }
+                        if (eggsFound >= MAX_EGGS) {
+                            player.sendMessage(TextFormat.AQUA + "You found all the eggs, give them to the Easter bunny!");
+                        }
+                    }));
                 })
                 .build()
         );

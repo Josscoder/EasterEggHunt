@@ -19,8 +19,8 @@ public class UserSession {
         return easterEggsFound.contains(easterEgg);
     }
 
-    public void markEasterEggAsFound(int easterEgg) {
-        CompletableFuture.runAsync(() -> {
+    public CompletableFuture<Void> markEasterEggAsFound(int easterEgg) {
+        return CompletableFuture.runAsync(() -> {
             MongoDBProvider.getInstance().markEasterEggAsFound(easterEgg, xuid);
             easterEggsFound.add(easterEgg);
         });
