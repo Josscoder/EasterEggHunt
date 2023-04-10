@@ -6,15 +6,14 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.TextFormat;
 import josscoder.easteregghunt.factory.EasterEggFactory;
-import josscoder.easteregghunt.factory.data.EasterEgg;
 
-public class RegisterEggCommand extends Command {
+public class RegisterBunnyCommand extends Command {
 
     private final EasterEggFactory easterEggFactory;
 
-    public RegisterEggCommand() {
-        super("registeregg", "Register a EasterEgg");
-        setPermission("register.egg.command.permission");
+    public RegisterBunnyCommand() {
+        super("registerbunny", "Register Easter Bunny");
+        setPermission("register.bunny.command.permission");
         easterEggFactory = EasterEggFactory.getInstance();
     }
 
@@ -26,11 +25,15 @@ public class RegisterEggCommand extends Command {
 
         Player player = (Player) sender;
 
-        EasterEgg easterEgg = easterEggFactory.registerAngGetEgg(player.getPosition());
-        Position position = easterEgg.getPosition();
+        if (easterEggFactory.isBunnyRegistered()) {
+            player.sendMessage(TextFormat.RED + "The position of the rabbit is already registered, delete it from the configuration and restart the server");
+            return false;
+        }
 
-        player.sendMessage(TextFormat.colorize(String.format("&bEasterEgg &6#%s &bwas registered successfully in &6(X: %s, Y: %s, Z: %s, World: %s)&b!",
-                easterEgg.getId(),
+        Position position = player.getPosition();
+        easterEggFactory.setBunny(position, true);
+
+        player.sendMessage(TextFormat.colorize(String.format("&bEaster Bunny &bwas registered successfully in &6(X: %s, Y: %s, Z: %s, World: %s)&b!",
                 (int) position.getX(),
                 (int) position.getY(),
                 (int) position.getZ(),
