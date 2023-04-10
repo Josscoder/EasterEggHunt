@@ -1,12 +1,14 @@
 package josscoder.easteregghunt.factory;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.entity.passive.EntityRabbit;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.TextFormat;
 import josscoder.easteregghunt.EasterEggHuntPlugin;
+import josscoder.easteregghunt.animation.DefaultEasterEggAnimation;
 import josscoder.easteregghunt.factory.data.EasterEgg;
 import josscoder.easteregghunt.utils.PositionUtils;
 import josscoder.jnpc.entity.line.PlaceholderLine;
@@ -84,6 +86,8 @@ public class EasterEggFactory {
                 .addLine(new PlaceholderLine(header, 1))
                 .adjust();
 
+        npc.showToWorldPlayers();
+
         bunnyRegistered = true;
     }
 
@@ -107,15 +111,17 @@ public class EasterEggFactory {
             config.save();
         }
 
-        NPC.create(AttributeSettings.builder()
+        NPC npc = NPC.create(AttributeSettings.builder()
                 .customEntity(true)
                 .minecraftId("joss:easter_egg")
                 .location(easterEgg.getPosition().getLocation())
-                .controller(((npc, player) -> {
-
-                }))
+                .controller(((clickedNPC, player) -> Server.getInstance().getScheduler().scheduleRepeatingTask(
+                        new DefaultEasterEggAnimation(clickedNPC.getAttributeSettings().getLocation(), player, 30),
+                        1
+                )))
                 .build()
         );
+        npc.showToWorldPlayers();
     }
 
     public EasterEgg registerAngGetEgg(Position position) {

@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.github.Josscoder</groupId>
             <artifactId>JNPC</artifactId>
-            <version>1.0.3-nukkit</version>
+            <version>nukkit-db9870adaf-1</version>
         </dependency>
     </dependencies>
 
