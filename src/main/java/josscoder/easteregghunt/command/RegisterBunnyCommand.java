@@ -33,11 +33,16 @@ public class RegisterBunnyCommand extends Command {
         Position position = player.getPosition();
         easterEggFactory.setBunny(position, true);
 
+        int x = (int) position.getX();
+        int y = (int) position.getY();
+        int z = (int) position.getZ();
+        String levelName = position.getLevel().getFolderName();
+
         player.sendMessage(TextFormat.colorize(String.format("&bEaster Bunny &bwas registered successfully in &6(X: %s, Y: %s, Z: %s, World: %s)&b!",
-                (int) position.getX(),
-                (int) position.getY(),
-                (int) position.getZ(),
-                position.getLevel().getFolderName()
+                x,
+                y,
+                z,
+                levelName
         )));
 
         return true;

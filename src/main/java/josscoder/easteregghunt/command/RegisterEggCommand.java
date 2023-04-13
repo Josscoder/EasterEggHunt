@@ -26,20 +26,28 @@ public class RegisterEggCommand extends Command {
 
         Player player = (Player) sender;
 
-        if (easterEggFactory.getEasterEggs().size() >= EasterEggFactory.MAX_EGGS) {
-            player.sendMessage(TextFormat.RED + String.format("Only %s easter eggs can be registered!", EasterEggFactory.MAX_EGGS));
+        int maxEggs = EasterEggFactory.MAX_EGGS;
+
+        if (easterEggFactory.getEasterEggs().size() >= maxEggs) {
+            player.sendMessage(TextFormat.RED + String.format("Only %s easter eggs can be registered!", maxEggs));
             return false;
         }
 
-        EasterEgg easterEgg = easterEggFactory.registerAngGetEgg(player.getPosition());
-        Position position = easterEgg.getPosition();
+        Position position = player.getPosition();
+        EasterEgg easterEgg = easterEggFactory.registerAngGetEgg(position);
+
+        int id = easterEgg.getId();
+        int x = (int) position.getX();
+        int y = (int) position.getY();
+        int z = (int) position.getZ();
+        String levelName = position.getLevel().getFolderName();
 
         player.sendMessage(TextFormat.colorize(String.format("&bEasterEgg &6#%s &bwas registered successfully in &6(X: %s, Y: %s, Z: %s, World: %s)&b!",
-                easterEgg.getId(),
-                (int) position.getX(),
-                (int) position.getY(),
-                (int) position.getZ(),
-                position.getLevel().getFolderName()
+                id,
+                x,
+                y,
+                z,
+                levelName
         )));
 
         return true;

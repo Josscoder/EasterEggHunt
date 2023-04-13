@@ -11,5 +11,7 @@ eggs:
   "1": "0:100:0:world"
   "2": ""
 
+popup-message: true
+
 commands:
   - "say %s is the best"

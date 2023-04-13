@@ -10,6 +10,7 @@ import josscoder.easteregghunt.session.SessionFactory;
 import josscoder.easteregghunt.session.data.UserSession;
 import org.bson.Document;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class AccountHandlerListener implements Listener {
@@ -29,7 +30,11 @@ public class AccountHandlerListener implements Listener {
 
         CompletableFuture.runAsync(() -> {
             Document document = mongoDBProvider.getOrCreateUserDoc(xuid);
-            UserSession userSession = new UserSession(xuid, mongoDBProvider.getEasterEggsFound(document), mongoDBProvider.hasRewardClaimed(document));
+
+            List<Integer> easterEggsFound = mongoDBProvider.getEasterEggsFound(document);
+            boolean rewardClaimed = mongoDBProvider.hasRewardClaimed(document);
+
+            UserSession userSession = new UserSession(xuid, easterEggsFound, rewardClaimed);
             sessionFactory.store(userSession);
         });
     }

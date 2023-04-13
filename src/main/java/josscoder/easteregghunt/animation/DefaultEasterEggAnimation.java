@@ -6,8 +6,8 @@ import cn.nukkit.level.Sound;
 import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.level.particle.HugeExplodeSeedParticle;
 import cn.nukkit.utils.TextFormat;
+import josscoder.easteregghunt.npc.NPCCodec;
 import josscoder.jnpc.entity.npc.NPC;
-import josscoder.jnpc.settings.AttributeSettings;
 
 public class DefaultEasterEggAnimation extends Animation {
 
@@ -19,13 +19,7 @@ public class DefaultEasterEggAnimation extends Animation {
 
     @Override
     public void onEnable() {
-        npc = NPC.create(AttributeSettings.builder()
-                .customEntity(true)
-                .minecraftId("joss:easter_egg")
-                .location(initLocation)
-                .controller((npc, player) -> {})
-                .build()
-        );
+        npc = NPCCodec.ANIMATION_EGG_NPC.apply(initLocation);
         npc.show(player);
     }
 
