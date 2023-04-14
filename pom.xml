@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.26</lombok.version>
         <nukkit.version>1.0-SNAPSHOT</nukkit.version>
-        <jnpc.version>nukkit-dc2607e8aa-1</jnpc.version>
+        <jnpc.version>1.0.3-powernukkitx</jnpc.version>
         <mongo.version>3.12.12</mongo.version>
     </properties>
 
